@@ -1,3 +1,27 @@
-Main {
-    background-color: green;
+#PictureSplitDiv
+{
+    display: flex;
+    flex-direction: row;
+    height: 10vh;
+    width: 10vw;
+    background-color: black;
+} 
+h3
+{
+
+}
+
+p
+{
+
+}
+main
+{
+    background-color: gray;
+    width: 100vw;
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
 }

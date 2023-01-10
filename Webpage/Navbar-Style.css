@@ -42,21 +42,6 @@
 }
 
 
-/* Everything for main part of website */
-main {
-    background-color: #2C2C2C;
-    height: 85vh;
-    width: 100vw;
-    display: flex;
-    align-items: center;
-}
-main p {
-    color: white;
-    font-size: 100px;
-    width: 100vw;
-    text-align: center;
-}
-
 /* Everything for the footer */
 footer {
     width: 100vw;
@@ -64,6 +49,8 @@ footer {
     background-color: #8DB8BE;
     display: flex;
     align-items: center;
+    bottom: 0;
+    position: absolute;
 }
 #footer_txt {
     font-weight: bold;
