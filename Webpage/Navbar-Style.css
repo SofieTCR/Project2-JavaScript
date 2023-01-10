@@ -1,0 +1,73 @@
+/* Removes all margins and paddings to prevent bars around navbar */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+/* Everything for the header and navbar */
+.navbar_container {
+    display: flex;
+    background-color: #8DB8BE;
+    width: 100vw;
+    height: 10vh;
+}
+.navbar_list {
+    width: 100%;
+    display: flex;
+    list-style-type: none;
+    flex-direction: row;
+    justify-content: space-around;
+    align-self: center;
+}
+.navbar_list a {
+    background-color: #D9D9D9;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    padding-right: 5vw;
+    padding-left: 5vw;
+    border: solid black 1px;
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+}
+#img_tcrlogo {
+    border: solid black 1px;
+    display: flex;
+    background-color: #D9D9D9;
+    /*width: 15vw;*/
+    height: 9vh;
+    margin-top: 0.4vh;
+    margin-left: 1vh;
+}
+
+
+/* Everything for main part of website */
+main {
+    background-color: #2C2C2C;
+    height: 85vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+}
+main p {
+    color: white;
+    font-size: 100px;
+    width: 100vw;
+    text-align: center;
+}
+
+/* Everything for the footer */
+footer {
+    width: 100vw;
+    height: 5vh;
+    background-color: #8DB8BE;
+    display: flex;
+    align-items: center;
+}
+#footer_txt {
+    font-weight: bold;
+    width: 100vw;
+    text-align: center;
+}
+
