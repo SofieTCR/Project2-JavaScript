@@ -13,6 +13,19 @@
     width: 100vw;
     height: 10vh;
 }
+
+#home_a {
+    
+}
+#uitleg_a {
+
+}
+#favogame_a {
+
+}
+
+
+
 .navbar_list {
     width: 100%;
     display: flex;
@@ -41,6 +54,8 @@
     margin-top: 0.4vh;
     margin-left: 1vh;
 }
+
+
 /* Navbar hamburger menu */
 .dropdown_content {
     display: none;
