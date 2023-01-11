@@ -40,7 +40,13 @@
     margin-top: 0.4vh;
     margin-left: 1vh;
 }
+/* Navbar hamburger menu */
 
+
+/* Main */
+main {
+    min-height: 85vh;
+}
 
 /* Everything for the footer */
 footer {
@@ -49,8 +55,6 @@ footer {
     background-color: #8DB8BE;
     display: flex;
     align-items: center;
-    bottom: 0;
-    position: absolute;
 }
 #footer_txt {
     font-weight: bold;
