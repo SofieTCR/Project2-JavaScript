@@ -1,0 +1,15 @@
+.afbeelding-game{
+    display: flex;
+    flex-direction: row;
+    margin: 20px;
+}
+#sect-1{
+    display: flex;
+
+}
+#sect-2{
+    display: flex;
+}
+#games{
+
+}
