@@ -64,21 +64,21 @@ function update() {
 		context.fillRect(snakeBody[i][0], snakeBody[i][1], blockSize, blockSize);
 	}
 
+			// border detecteren
 	if (snakeX < 0
 		|| snakeX > total_col * blockSize - blockSize
 		|| snakeY < 0
 		|| snakeY > total_row * blockSize - blockSize) {
 		
-		// border detecteren
 		gameOver = true;
 		deathPopup();
 
 	}
 
+				// slang contact detecteren
 	for (let i = 0; i < snakeBody.length; i++) {
 		if (snakeX == snakeBody[i][0] && snakeY == snakeBody[i][1]) {
 			
-			// slang contact detecteren
 			gameOver = true;
 		}
 	}
