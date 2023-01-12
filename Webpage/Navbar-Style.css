@@ -98,6 +98,7 @@ footer {
     align-items: center;
 }
 #footer_txt {
+    color: white;
     font-weight: bold;
     width: 100vw;
     text-align: center;
