@@ -1,3 +1,10 @@
 Main {
-    background-color: green;
+    background-color: #2c2c2c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#MyCanvas
+{
+    background-color: #ededed;
 }
