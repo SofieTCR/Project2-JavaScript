@@ -80,6 +80,7 @@ function update() {
 		if (snakeX == snakeBody[i][0] && snakeY == snakeBody[i][1]) {
 			
 			gameOver = true;
+			deathPopup();
 		}
 	}
 }
