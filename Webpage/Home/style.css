@@ -1,15 +1,32 @@
-.afbeelding-game{
-    display: flex;
-    flex-direction: row;
-    margin: 20px;
+body{
+    background-color: #2c2c2c;
 }
-#sect-1{
+h2{
     display: flex;
-
-}
-#sect-2{
-    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ededed;
+    padding: 10px;
+    border: #767676 dashed 5px;
+    border-radius: 15px;
+    margin: 20px 20px 20px 7.2vw;
+    width: 10vw;
+    background-color: #343434;
 }
 #games{
-
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+#sect-2{
+    margin-left: 15vw;
+}
+.afbeelding-game{
+    margin-bottom: 5vh;
+}
+.img-game{
+    padding: 30px;
+    border: #767676 dashed 5px;
+    border-radius: 15px;
+    background-color: #343434;
 }
