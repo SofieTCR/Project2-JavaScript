@@ -15,27 +15,27 @@
 }
 #home_a {
     background-color: #ededed;
-    padding: 1vh 102.77px 1vh 102.77px;
     border: solid black 1px;
     font-weight: bold;
     text-decoration: none;
     color: black;
+    padding: 1vh 102.77px 1vh 102.77px;
 }
 #uitleg_a {
     background-color: #ededed;
-    padding: 1vh 44.525px 1vh 44.525px;
     border: solid black 1px;
     font-weight: bold;
     text-decoration: none;
     color: black;
+    padding: 1vh 44.525px 1vh 44.525px;
 }
 #favogame_a {
     background-color: #ededed;
-    padding: 1vh 42.3px 1vh 42.3px;
     border: solid black 1px;
     font-weight: bold;
     text-decoration: none;
     color: black;
+    padding: 1vh 42.3px 1vh 42.3px;
 }
 .navbar_list {
     width: 100%;
@@ -61,7 +61,6 @@
     font-weight: bold;
     text-decoration: none;
     color: black;
-    margin-top: vh;
 }
 nav a {
     color: black;
@@ -79,7 +78,7 @@ nav a {
     border: black solid 1px;
 }
 .dropdown_content a {
-    padding: 0.8rem 101px 0.8rem 100px;
+    padding: 0.8rem 95px 0.8rem 94px;
     display: flex;
     flex-direction: column;
     text-align: left;
@@ -91,11 +90,25 @@ nav a {
 .dropdown:hover .dropdown_content{
     display: flex;
     flex-direction: column;
+    margin-top: 1vh;
 }
 .a_btn:hover {
     background-color: #815d8b;
     color: white;
-    border: black solid 1px;
+}
+#gian_btn:hover {
+    border-bottom: black solid 1px;
+}
+#jack_btn:hover {
+    border-top: black solid 1px;
+    border-bottom: black solid 1px;
+}
+#sofie_btn:hover {
+    border-top: black solid 1px;
+    border-bottom: black solid 1px;
+}
+#stacey_btn:hover {
+    border-top: black solid 1px;
 }
 
 
