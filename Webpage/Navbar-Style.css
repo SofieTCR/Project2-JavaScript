@@ -13,30 +13,7 @@
     width: 100vw;
     height: 10vh;
 }
-#home_a {
-    background-color: #ededed;
-    border: solid black 1px;
-    font-weight: bold;
-    text-decoration: none;
-    color: black;
-    padding: 1vh 102.77px 1vh 102.77px;
-}
-#uitleg_a {
-    background-color: #ededed;
-    border: solid black 1px;
-    font-weight: bold;
-    text-decoration: none;
-    color: black;
-    padding: 1vh 44.525px 1vh 44.525px;
-}
-#favogame_a {
-    background-color: #ededed;
-    border: solid black 1px;
-    font-weight: bold;
-    text-decoration: none;
-    color: black;
-    padding: 1vh 42.3px 1vh 42.3px;
-}
+
 .navbar_list {
     width: 100%;
     display: flex;
@@ -54,17 +31,25 @@
     margin-top: 0.4vh;
     margin-left: 1vh;
 }
-#dropdown_btn {
-    background-color: #ededed;
-    padding: 1vh 86.225px 1vh 86.225px;
+nav a {
+    background-color: #ededed;  
     border: solid black 1px;
     font-weight: bold;
     text-decoration: none;
     color: black;
+    padding: 1vh 0 1vh 0;
 }
-nav a {
-    color: black;
-    text-decoration: none;
+#home_a {
+    padding: 1vh 101.775px 1vh 101.775px;
+}
+#uitleg_a {
+    padding: 1vh 43.525px 1vh 43.525px;
+}
+#favo_a {
+    padding: 1vh 41.43px 1vh 41.43px;
+}
+#dropdown_btn {
+    padding: 1vh 91.115px 1vh 91.115px;
 }
 
 
@@ -75,14 +60,14 @@ nav a {
     background-color: white;
     z-index: 5;
     box-shadow: 0rem 0.5rem 1rem 0rem rgba(0, 0, 0, 0.2);
-    border: black solid 1px;
 }
 .dropdown_content a {
-    padding: 0.8rem 95px 0.8rem 94px;
+    max-width: 250px;
+    padding: 0.8rem 98.5px 0.8rem 98.5px;
     display: flex;
     flex-direction: column;
     text-align: left;
-   background-color: #D9D9D9;
+   background-color: #ededed;
 }
 .a_btn {
     display: flex;
@@ -95,20 +80,6 @@ nav a {
 .a_btn:hover {
     background-color: #815d8b;
     color: white;
-}
-#gian_btn:hover {
-    border-bottom: black solid 1px;
-}
-#jack_btn:hover {
-    border-top: black solid 1px;
-    border-bottom: black solid 1px;
-}
-#sofie_btn:hover {
-    border-top: black solid 1px;
-    border-bottom: black solid 1px;
-}
-#stacey_btn:hover {
-    border-top: black solid 1px;
 }
 
 
