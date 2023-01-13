@@ -27,7 +27,7 @@ window.onload = function () {
 	placeFood();
 	document.addEventListener("keyup", changeDirection);
 	// slang snelte
-	setInterval(update, 1000 / 7);
+	setInterval(update, 1000 / 8);
 }
 
 function update() {
