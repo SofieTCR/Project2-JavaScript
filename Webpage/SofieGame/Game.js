@@ -82,6 +82,10 @@ function SpriteMovement() {
             Gameobjects[SpriteIndex][3] = CanvasDimensions[1] - Gameobjects[SpriteIndex][5];
             break;
 
+        default:
+            break;
+    }
+    switch (true) {
         case Gameobjects[SpriteIndex][2] < 0 :
             Gameobjects[SpriteIndex][2] = 0;
             break;
