@@ -31,8 +31,10 @@ h1 {
 /* Game settings */
 .ground {
     display: flex;
-    background-color: lightsalmon;
-    width: 50vw;
+    background-color: #472a0a;
+    width: 52vw;
     height: 10vh;
-    bordr
+    align-self: flex-end;
+    border-bottom-left-radius: 45px;
+    border-bottom-right-radius: 45px;
 }
