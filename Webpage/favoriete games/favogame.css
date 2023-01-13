@@ -21,7 +21,7 @@ h1 {
 }
 .favo_game {
     flex-direction: column;
-    width: 52vw;
+    width: 70vw;
     background-color: #343434;
     display: flex;
     margin-bottom: 10vh;
