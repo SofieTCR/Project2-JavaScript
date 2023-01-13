@@ -27,7 +27,7 @@ window.onload = function () {
 	placeFood();
 	document.addEventListener("keyup", changeDirection);
 	// slang snelte
-	setInterval(update, 1000 / 10);
+	setInterval(update, 1000 / 7);
 }
 
 function update() {
@@ -93,7 +93,7 @@ function deathPopup()
  document.body.appendChild(el);
 }
 
-// beweging slang
+// beweging slang controls
 function changeDirection(e) {
     console.log(e.code);
 	if (e.code == "KeyW" && speedY != 1) {

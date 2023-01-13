@@ -63,7 +63,7 @@ nav a {
 }
 .dropdown_content a {
     max-width: 250px;
-    padding: 0.8rem 98.5px 0.8rem 98.5px;
+    padding: 0.8rem 98.25px 0.8rem 98.25px;
     display: flex;
     flex-direction: column;
     text-align: left;

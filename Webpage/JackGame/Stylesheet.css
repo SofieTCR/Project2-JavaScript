@@ -1,3 +1,40 @@
-Main {
-    background-color: green;
+/* General settings */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+
+/* main body */
+main {
+    display: flex;
+    flex-direction: column;
+    background-color: #2c2c2c;
+    align-items: center;
+}
+h1 {
+    margin-top: 1vh;
+    color: #ededed;
+}
+.game_window {
+    display: flex;
+    background-color: #BBD5DD;
+    height: 65vh;
+    width: 50vw;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    border: #a3a3a3 solid 10px;
+    border-radius: 55px;
+}
+
+/* Game settings */
+.ground {
+    display: flex;
+    background-color: #472a0a;
+    width: 52vw;
+    height: 10vh;
+    align-self: flex-end;
+    border-bottom-left-radius: 45px;
+    border-bottom-right-radius: 45px;
 }
