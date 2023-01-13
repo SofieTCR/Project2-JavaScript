@@ -23,6 +23,7 @@ document.addEventListener("keydown", function(ReadKey) {
     PressedKey[ReadKey.keyCode] = true;
 });
 document.addEventListener("keyup", function(ReadKey) {
+    PressedKey = PressedKey || [];
     PressedKey[ReadKey.keyCode] = false;
 });
 
@@ -47,7 +48,7 @@ function onLoad() {
     CanvasDimensions[1] = MyCanvas.offsetHeight - parseInt(MyCanvas.style.borderBottomWidth) * 2;
     ObstacleIMG.src = "assets/SofieGame Obstacle.png";
     Gameobjects.push(sprite);
-    CreateRandomObstacles(true, 2, 50);
+    CreateRandomObstacles(true, 0, 50);
     GetSpriteIndex(Gameobjects);
 }    
 
