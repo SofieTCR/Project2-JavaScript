@@ -33,7 +33,6 @@ h1 {
     display: flex;
     flex-direction: column;
     justify-content: start;
-    align-items: center;
     margin-bottom: 5vh;
 }
 .game_explanation {
@@ -43,7 +42,6 @@ h1 {
     display: flex;
     flex-direction: column;
     justify-content: start;
-    align-items: center;
 }
 p {
  color: #a3a3a3;
