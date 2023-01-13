@@ -88,7 +88,7 @@ function update() {
 function deathPopup()
 {
  var el = document.createElement("div");
- el.setAttribute("style","position:absolute;top:45%; width: 99.5vw; display: flex; justify-content: center; font-size: 80px; color: red; padding: 0px; margin: 0px;");
+ el.setAttribute("style","position:absolute;top:45%; width: 99.5vw; display: flex; justify-content: center; font-size: 80px; color: #E0435A; padding: 0px; margin: 0px; font-family: Times New Roman;");
  el.innerHTML = "Game Over";
  document.body.appendChild(el);
 }
