@@ -100,25 +100,43 @@ function SpriteMovement() {
     }
 }
 
-function DetectCollision(GameObject1, GameObject2) { //GameObject1 is the movable object, GameObject2 is the static one.
-        if (GameObject1[2] + GameObject1[4] > GameObject2[2] && GameObject1[2] < GameObject2[2] + GameObject2[4] && GameObject1[3] + GameObject1[5] > GameObject2[3] && GameObject1[3] < GameObject2[3] + GameObject2[5]) {
-            if (Math.min(Math.abs(GameObject1[2] + GameObject1[4] - GameObject2[2]), Math.abs(GameObject2[2] + GameObject2[4] - GameObject1[2])) < Math.min(Math.abs(GameObject1[3] + GameObject1[5] - GameObject2[3]), Math.abs(GameObject2[3] + GameObject2[5] - GameObject1[3]))) {
-                if (Math.abs(GameObject1[2] + GameObject1[4] - GameObject2[2]) < Math.abs(GameObject2[2] + GameObject2[4] - GameObject1[2])) {
-                    GameObject1[2] = GameObject2[2] - GameObject1[4];
-                }
-                else {
-                    GameObject1[2] = GameObject2[2] + GameObject2[4];
-                }
+function DetectCollision(movableObject, staticObject) {
+    // Check if the two objects are overlapping
+    if (movableObject[2] + movableObject[4] > staticObject[2] &&
+        movableObject[2] < staticObject[2] + staticObject[4] &&
+        movableObject[3] + movableObject[5] > staticObject[3] &&
+        movableObject[3] < staticObject[3] + staticObject[5]) {
+        
+        // Calculate the distance between the objects on the x and y axis
+        const xDistance = Math.min(
+            Math.abs(movableObject[2] + movableObject[4] - staticObject[2]),
+            Math.abs(staticObject[2] + staticObject[4] - movableObject[2])
+        );
+        const yDistance = Math.min(
+            Math.abs(movableObject[3] + movableObject[5] - staticObject[3]),
+            Math.abs(staticObject[3] + staticObject[5] - movableObject[3])
+        );
+
+        // Determine which axis the collision occurred on
+        if (xDistance < yDistance) {
+            // The collision occurred on the x-axis
+            if (Math.abs(movableObject[2] + movableObject[4] - staticObject[2]) < Math.abs(staticObject[2] + staticObject[4] - movableObject[2])) {
+                movableObject[2] = staticObject[2] - movableObject[4];
             }
             else {
-                if (Math.abs(GameObject1[3] + GameObject1[5] - GameObject2[3]) < Math.abs(GameObject2[3] + GameObject2[5] - GameObject1[3])) {
-                    GameObject1[3] = GameObject2[3] - GameObject1[5];
-                }
-                else {
-                    GameObject1[3] = GameObject2[3] + GameObject2[5];
-                }
+                movableObject[2] = staticObject[2] + staticObject[4];
             }
-        }  //AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH, This function was so confusing for my brain. But it works so that's good          
+        }
+        else {
+            // The collision occurred on the y-axis
+            if (Math.abs(movableObject[3] + movableObject[5] - staticObject[3]) < Math.abs(staticObject[3] + staticObject[5] - movableObject[3])) {
+                movableObject[3] = staticObject[3] - movableObject[5];
+            }
+            else {
+                movableObject[3] = staticObject[3] + staticObject[5];
+            }
+        }
+    }         
 }
 
 function DrawGameObject(InputObject) {
