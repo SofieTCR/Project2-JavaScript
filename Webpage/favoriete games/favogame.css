@@ -26,6 +26,7 @@ h1 {
     display: flex;
     margin-bottom: 10vh;
     border-radius: 55px;
+    min-height: 43vh;
 }
 .game_name {
     margin-left: 3vw;
@@ -38,10 +39,10 @@ h1 {
 .game_explanation {
     margin-left: 3vw;
     width: 35vw;
-    min-height: 29vh;
     display: flex;
     flex-direction: column;
     justify-content: start;
+    margin-bottom: 30px;
 }
 p {
  color: #a3a3a3;
@@ -62,4 +63,8 @@ h2 {
     margin-top: 24px;
     border: #a3a3a3 dashed 4px;
     border-radius: 20px
+}
+#img_uncharted {
+    height: 40vh; 
+    margin-left: 41vw;
 }
