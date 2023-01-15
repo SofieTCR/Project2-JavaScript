@@ -1,5 +1,5 @@
 .button {
-    background-color:  #a4ecc5 ;
+    background-color:  #a3a3a3 ;
     color: black;
     padding: 30px 30px;
     text-align: center;
@@ -7,7 +7,7 @@
     display: inline-block;
     font-size: 15px;
   }
-  body {background-color: #797e82 ;}
+  body {background-color: #2c2c2c ;}
   .center {
     display: block;
     margin-left: auto;
@@ -22,5 +22,5 @@
     width: 50%;
   }
   #knopreset{
-    background-color: #a4ecc5;
+    background-color: #a3a3a3;
   }
