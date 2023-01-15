@@ -28,9 +28,23 @@
             </ul>
         </div>
     </nav>
-    <main>
-        <p>To be continued...</p>
-    </main>
+    <h1> Cookies: </h1>
+	<h2 id="cookies"> 0 </h2>
+	<img src="../img/cookie.png" onclick="ClickUp();" id="cookie" class="center" />
+    <p id="cpsDisplay"> You are getting: 0 per second</p> 
+    <p id="cpcDisplay"> You are getting: 0 per click</p>
+    <button onclick="resetData();" id="knopreset" >Reset your data</button> 
+    <button class="button" id="smallcpcBuy" onclick="cpcUp();" >+1 Cookies Per Click! 25 cookies. </button>
+    <button class="button" id="bigcpcBuy" onclick="bigcpcUp();" >+6 Cookies Per Click! 250 cookies. </button>
+    <button class="button" id="ClickerBuy" onclick="buyClicker();" >+1 Cookies Per Second! 50 cookies. </button>
+    <button class="button" id="BigClickerBuy" onclick="buyBigClicker();" >+5 Cookies Per Second! 300 cookies. </button>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    
+    <script src="Game.js"></script>
     <footer>
         <p id="footer_txt">Copyright blabla</p>
     </footer>
