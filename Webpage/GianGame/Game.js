@@ -106,6 +106,7 @@ function getStorage(name, deafult){
     }
     
   }
+  // hij reset wel de score alleen niet de hoe extra clicks power ups, hij reset wel de clicks per seconde alleen veranderd hij dat niet in de pagina zelf ( ik ga dood van binnen en weet niet hoe ik het moet fixen)
   function resetData(){
     if (confirm('Are you sure you want to reset your data?')) {
     console.log('reseting data....');
