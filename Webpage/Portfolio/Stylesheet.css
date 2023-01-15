@@ -34,7 +34,7 @@ main
     margin-bottom: 24px;
 }
 /* Text & Image Modifiers */
-#StudentFoto
+.StudentFoto
 {
     margin-top: 48px;
     margin-bottom: 48px;
@@ -59,7 +59,7 @@ h1
     margin-bottom: 24px;
     color: #a3a3a3;
 }
-#StudentFoto{
+#GianFoto{
     width: 300px;
     height: 300px;
 }
