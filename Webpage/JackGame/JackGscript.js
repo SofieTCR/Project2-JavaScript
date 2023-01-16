@@ -5,8 +5,9 @@ context = document.querySelector("canvas").getContext("2d");
 context.canvas.height = 700;
 context.canvas.width = 1200;
 
+
 rectangle = {
-    height:32,
+    height:75,
     jumping:true,
     width:32,
     x:30, //bottom left of canvas
@@ -43,6 +44,7 @@ loop = function() {
     if (controller.up && rectangle.jumping == false) {
         rectangle.y_velocity -= 20;
         rectangle.jumping = true;
+        
     }
     if (controller.left) {
         rectangle.x_velocity -= 1;
@@ -58,9 +60,9 @@ loop = function() {
     rectangle.y_velocity *= 0.9; //friction
 
     //fake collision detection for the jump hitting the bottom ground line
-    if (rectangle.y > 700 - 50 - 32) {
+    if (rectangle.y > 700 - 100 - rectangle.height) {
         rectangle.jumping = false;
-        rectangle.y = 700 - 50 - 32; 
+        rectangle.y = 700 - 100 - rectangle.height; 
         rectangle.y_velocity = 0; //collision makes velocity 0 once it hits something
     }
     
@@ -72,27 +74,28 @@ loop = function() {
         rectangle.x = 1168;
     }
 
-
     //background context
-    context.fillStyle = "#202020"; //background color
+    context.fillStyle = "#83b7d0"; //background color
     context.fillRect(0, 0, 1200, 700); //x, y, width, height for background
-    context.fillStyle = "#ff0000"; //rectangle color (red)
     //rectangle context
-    context.beginPath(); //idk tbh
+    context.fillStyle = "#ff0000"; //rectangle color
+    context.beginPath();
     context.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height); //rectangle position and size
     context.fill();
-    //bottom line context
-    context.strokeStyle = "#202830"; //bottom line color
-    context.lineWidth = 4; //bottom line width
-    context.beginPath(); 
-    context.moveTo(0, 650);
-    context.lineTo(1200, 650);
-    context.stroke();
+    //bottom ground context
+    context.fillStyle = "#683d28"; //ground color
+    context.beginPath();
+    context.fillRect(0, 600, 1200, 100)
+    context.fill();
+    //bottom grass line context
+    context.fillStyle = "#136b24"; //bottom line color
+    context.beginPath();
+    context.rect(0, 600, 1200, 20);
+    context.fill();
 
     // call update when the browser is ready to draw again
     window.requestAnimationFrame(loop); //executes the code every frame forever
 };
-
 
 
 window.addEventListener("keydown", controller.keyListener);
