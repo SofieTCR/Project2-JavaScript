@@ -159,7 +159,7 @@ function getStorage(name, deafult){
       clicks = clicks - clickerPrice;
       clickerPrice = clickerPrice * 1.7;
       clickerPrice = Math.round(clickerPrice);
-      document.getElementById("ClickerBuy").innerHTML  = "1+ Cookies Per Second! "+clickerPrice + " cookies.";
+      document.getElementById("ClickerBuy").innerHTML  = "+1 Cookies Per Second! "+clickerPrice + " cookies.";
       persecond = persecond + 1;
       document.getElementById("cookies").innerHTML = clicks
       document.getElementById("cpsDisplay").innerHTML = "You are getting: " + persecond + " per second" ;
