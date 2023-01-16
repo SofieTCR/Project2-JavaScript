@@ -4,14 +4,16 @@ var ctx = MyCanvas.getContext("2d"); // set the canvas to 2d mode
 var CanvasDimensions = [];
 var PressedKey;
 var SpriteSpeed = 5;
-var Gameobjects = []; //each gameobject is structured as follows: 0:name, 1:type, 2:PositionX, 3:PositionY, 4:SizeX, 5:SizeY
+var Gameobjects = []; //each gameobject is structured as follows: 0:name, 1:type, 2:PositionX, 3:PositionY, 4:SizeX, 5:SizeY 6:Colour 7:Font/imgname
+// Accepted Types: Sprite, Obstacle, StaticCollidibleObject, StaticNonCollidibleObject, Interactible, Text
 var ObstacleIMG = new Image();
+var ObstacleSize = [312, 129];
+var KeyIMG = new Image();
+var Keysize = [83, 83];
 var SpriteIndex;
 var Debug = false;
 
 //temp vars
-var ObstacleSize = [312, 129];
-var sprite = CreateGameObject("My Sprite", "Sprite", 300, 180, 30, 60);
 
 
 
@@ -33,8 +35,11 @@ function fixedUpdate() {
     SpriteMovement();
 
     for (let index = 0; index < Gameobjects.length; index++) {
-        if (Gameobjects[index][1] == "Obstacle") {
-            DetectCollision(Gameobjects[SpriteIndex], Gameobjects[index])
+        if (Gameobjects[index][1] == "Obstacle" || Gameobjects[index][1] == "StaticCollidibleObject") {
+            //check if we're colliding with anything
+            if (DetectCollision(Gameobjects[SpriteIndex], Gameobjects[index])) {
+                FixCollision(Gameobjects[SpriteIndex], Gameobjects[index]); //Move the sprite out of the collision
+            }
         }
     }
 
@@ -46,11 +51,24 @@ function fixedUpdate() {
 function onLoad() {
     CanvasDimensions[0] = MyCanvas.offsetWidth - parseInt(MyCanvas.style.borderRightWidth) * 2;
     CanvasDimensions[1] = MyCanvas.offsetHeight - parseInt(MyCanvas.style.borderBottomWidth) * 2;
-    ObstacleIMG.src = "assets/SofieGame Obstacle.png";
-    Gameobjects.push(sprite);
     CreateRandomObstacles(true, 0, 50);
+    ReadyCanvas();
     GetSpriteIndex(Gameobjects);
 }    
+
+function ReadyCanvas() {
+    ObstacleIMG.src = "assets/SofieGame Obstacle.png";
+    KeyIMG.src = "assets/SofieGame Key.png";
+
+    Gameobjects.push(CreateGameObject("My Sprite", "Sprite", 300, 180, 30, 60, "green")); // create sprite
+
+    Gameobjects.push(CreateGameObject("Scoreboard Border", "StaticCollidibleObject", 0, 35, 60, 4, "black")); // Scoreboard
+    Gameobjects.push(CreateGameObject("Scoreboard Border", "StaticCollidibleObject", 60, 0, 4, 39, "black"));
+    Gameobjects.push(CreateGameObject("Scoreboard Border", "StaticCollidibleObject", 0, 0, 60, 35, "#ededed"));
+    Gameobjects.push(CreateGameObject("Scoreboard Key", "Interactible", 5, 2.5, 30, 30, "", KeyIMG));
+    Gameobjects.push(CreateGameObject("0", "Text", 35, 30, 0, 0, "black", "30px Arial"));
+
+}
 
 function GetSpriteIndex(list) {
     for (let index = 0; index < list.length; index++) {
@@ -107,36 +125,43 @@ function DetectCollision(movableObject, staticObject) {
         movableObject[3] + movableObject[5] > staticObject[3] &&
         movableObject[3] < staticObject[3] + staticObject[5]) {
         
-        // Calculate the distance between the objects on the x and y axis
-        const xDistance = Math.min(
-            Math.abs(movableObject[2] + movableObject[4] - staticObject[2]),
-            Math.abs(staticObject[2] + staticObject[4] - movableObject[2])
-        );
-        const yDistance = Math.min(
-            Math.abs(movableObject[3] + movableObject[5] - staticObject[3]),
-            Math.abs(staticObject[3] + staticObject[5] - movableObject[3])
-        );
+        return true;
+    }     
+    else {
+        return false;
+    }    
+}
 
-        // Determine which axis the collision occurred on
-        if (xDistance < yDistance) {
-            // The collision occurred on the x-axis
-            if (Math.abs(movableObject[2] + movableObject[4] - staticObject[2]) < Math.abs(staticObject[2] + staticObject[4] - movableObject[2])) {
-                movableObject[2] = staticObject[2] - movableObject[4];
-            }
-            else {
-                movableObject[2] = staticObject[2] + staticObject[4];
-            }
+function FixCollision(movableObject, staticObject) {
+    // Calculate the distance between the objects on the x and y axis
+    const xDistance = Math.min(
+        Math.abs(movableObject[2] + movableObject[4] - staticObject[2]),
+        Math.abs(staticObject[2] + staticObject[4] - movableObject[2])
+    );
+    const yDistance = Math.min(
+        Math.abs(movableObject[3] + movableObject[5] - staticObject[3]),
+        Math.abs(staticObject[3] + staticObject[5] - movableObject[3])
+    );
+
+    // Determine which axis the collision occurred on
+    if (xDistance < yDistance) {
+        // The collision occurred on the x-axis
+        if (Math.abs(movableObject[2] + movableObject[4] - staticObject[2]) < Math.abs(staticObject[2] + staticObject[4] - movableObject[2])) {
+            movableObject[2] = staticObject[2] - movableObject[4];
         }
         else {
-            // The collision occurred on the y-axis
-            if (Math.abs(movableObject[3] + movableObject[5] - staticObject[3]) < Math.abs(staticObject[3] + staticObject[5] - movableObject[3])) {
-                movableObject[3] = staticObject[3] - movableObject[5];
-            }
-            else {
-                movableObject[3] = staticObject[3] + staticObject[5];
-            }
+            movableObject[2] = staticObject[2] + staticObject[4];
         }
-    }         
+    }
+    else {
+        // The collision occurred on the y-axis
+        if (Math.abs(movableObject[3] + movableObject[5] - staticObject[3]) < Math.abs(staticObject[3] + staticObject[5] - movableObject[3])) {
+            movableObject[3] = staticObject[3] - movableObject[5];
+        }
+        else {
+            movableObject[3] = staticObject[3] + staticObject[5];
+        }
+    }
 }
 
 function DrawGameObject(InputObject) {
@@ -146,15 +171,30 @@ function DrawGameObject(InputObject) {
             ctx.drawImage(ObstacleIMG, InputObject[2], InputObject[3], InputObject[4], InputObject[5]);
             break;
         case "Sprite":
-            ctx.fillStyle = "green";
-            ctx.fillRect(InputObject[2], InputObject[3], InputObject[4], InputObject[5])
+            ctx.fillStyle = InputObject[6];
+            ctx.fillRect(InputObject[2], InputObject[3], InputObject[4], InputObject[5]);
             break;
+        case "StaticCollidibleObject":
+            ctx.fillStyle = InputObject[6];
+            ctx.fillRect(InputObject[2], InputObject[3], InputObject[4], InputObject[5]);
+            break;
+        case "StaticNonCollidibleObject":
+            ctx.fillStyle = InputObject[6];
+            ctx.fillRect(InputObject[2], InputObject[3], InputObject[4], InputObject[5]);
+            break;
+        case "Interactible" :
+            ctx.drawImage(InputObject[7], InputObject[2], InputObject[3], InputObject[4], InputObject[5]);
+            break;
+        case "Text" : 
+            ctx.fillStyle = InputObject[6];
+            ctx.font = InputObject[7];
+            ctx.fillText(InputObject[0], InputObject[2], InputObject[3]);
         default:
             break;
     }
 }
 
-function CreateGameObject(name, type, PositionX, PositionY, SizeX, SizeY)
+function CreateGameObject(name, type, PositionX, PositionY, SizeX, SizeY, Colour, Font)
 {
     var ReturnObject = [];
     ReturnObject.push(name);
@@ -163,6 +203,8 @@ function CreateGameObject(name, type, PositionX, PositionY, SizeX, SizeY)
     ReturnObject.push(PositionY);
     ReturnObject.push(SizeX);
     ReturnObject.push(SizeY);
+    ReturnObject.push(Colour);
+    ReturnObject.push(Font);
     return ReturnObject;
 }
 
