@@ -4,7 +4,7 @@ var ctx = MyCanvas.getContext("2d"); // set the canvas to 2d mode
 var CanvasDimensions = [];
 var PressedKey;
 var SpriteSpeed = 5;
-var Gameobjects = []; //each gameobject is structured as follows: 0:name, 1:type, 2:PositionX, 3:PositionY, 4:SizeX, 5:SizeY 6:Colour 7:Font/imgname
+var Gameobjects = []; //each gameobject is structured as follows: 0:name, 1:type, 2:PositionX, 3:PositionY, 4:SizeX, 5:SizeY 6:Colour 7:Font, parameter
 // Accepted Types: Sprite, Obstacle, StaticCollidibleObject, StaticNonCollidibleObject, Interactible, Text
 var ObstacleIMG = new Image();
 var ObstacleSize = [312, 129];
@@ -65,8 +65,8 @@ function ReadyCanvas() {
     Gameobjects.push(CreateGameObject("Scoreboard Border", "StaticCollidibleObject", 0, 35, 60, 4, "black")); // Scoreboard
     Gameobjects.push(CreateGameObject("Scoreboard Border", "StaticCollidibleObject", 60, 0, 4, 39, "black"));
     Gameobjects.push(CreateGameObject("Scoreboard Border", "StaticCollidibleObject", 0, 0, 60, 35, "#ededed"));
-    Gameobjects.push(CreateGameObject("Scoreboard Key", "Interactible", 5, 2.5, 30, 30, "", KeyIMG));
-    Gameobjects.push(CreateGameObject("0", "Text", 35, 30, 0, 0, "black", "30px Arial"));
+    Gameobjects.push(CreateGameObject("Scoreboard Key", "Interactible", 5, 2.5, 30, 30, "", "", KeyIMG));
+    Gameobjects.push(CreateGameObject("Scoreboard Counter", "Text", 35, 30, 0, 0, "black", "30px Arial", "0"));
 
 }
 
@@ -183,18 +183,18 @@ function DrawGameObject(InputObject) {
             ctx.fillRect(InputObject[2], InputObject[3], InputObject[4], InputObject[5]);
             break;
         case "Interactible" :
-            ctx.drawImage(InputObject[7], InputObject[2], InputObject[3], InputObject[4], InputObject[5]);
+            ctx.drawImage(InputObject[8], InputObject[2], InputObject[3], InputObject[4], InputObject[5]);
             break;
         case "Text" : 
             ctx.fillStyle = InputObject[6];
             ctx.font = InputObject[7];
-            ctx.fillText(InputObject[0], InputObject[2], InputObject[3]);
+            ctx.fillText(InputObject[8], InputObject[2], InputObject[3]);
         default:
             break;
     }
 }
 
-function CreateGameObject(name, type, PositionX, PositionY, SizeX, SizeY, Colour, Font)
+function CreateGameObject(name, type, PositionX, PositionY, SizeX, SizeY, Colour, Font, parameter)
 {
     var ReturnObject = [];
     ReturnObject.push(name);
@@ -204,7 +204,8 @@ function CreateGameObject(name, type, PositionX, PositionY, SizeX, SizeY, Colour
     ReturnObject.push(SizeX);
     ReturnObject.push(SizeY);
     ReturnObject.push(Colour);
-    ReturnObject.push(Font);
+    ReturnObject.push(Font);    
+    ReturnObject.push(parameter);
     return ReturnObject;
 }
 
