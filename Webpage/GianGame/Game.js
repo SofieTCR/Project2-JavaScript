@@ -46,7 +46,7 @@ function getStorage(name, deafult){
   else {
     console.log("Data found for clickerPrice");
     var clickerPrice = Number(localStorage.clickerPrice);
-    document.getElementById("ClickerBuy").innerHTML  = "1+ Cookies per second! "+clickerPrice + " cookies.";
+    document.getElementById("ClickerBuy").innerHTML  = "+1 Cookies per second! "+clickerPrice + " cookies.";
   }
   if (localStorage.getItem("bigCPCprice") === null) {
     console.log("no data found for big cpc price");
@@ -78,7 +78,7 @@ function getStorage(name, deafult){
   else {
     console.log("Data found for big clicker price!");
     var BigclickerPrice = Number(localStorage.BigclickerPrice);
-    document.getElementById("BigClickerBuy").innerHTML  = "5+ Cookies Per Second! "+ BigclickerPrice + " cookies!";
+    document.getElementById("BigClickerBuy").innerHTML  = "+5 Cookies Per Second! "+ BigclickerPrice + " cookies!";
     
   }
   console.log("Uh ohhh, are you cheating? That may not end well...")
@@ -178,7 +178,7 @@ function getStorage(name, deafult){
       clicks = clicks - BigclickerPrice;
       BigclickerPrice = BigclickerPrice * 1.5;
       BigclickerPrice = Math.round(BigclickerPrice);
-      document.getElementById("BigClickerBuy").innerHTML  = "5+ Cookies Per Second! "+BigclickerPrice + " cookies!";
+      document.getElementById("BigClickerBuy").innerHTML  = "+5 Cookies Per Second! "+BigclickerPrice + " cookies!";
       persecond = persecond + 5;
       document.getElementById("cookies").innerHTML = clicks;
       document.getElementById("cpsDisplay").innerHTML = "You are getting: " + persecond + " per second" ;
