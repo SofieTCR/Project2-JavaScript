@@ -1,4 +1,4 @@
-var context, controller, rectangle, loop, platform, fakecollision;
+var context, controller, rectangle, loop;
 
 context = document.querySelector("canvas").getContext("2d");
 
@@ -109,13 +109,8 @@ loop = function() {
     window.requestAnimationFrame(loop); //executes the code every frame forever
 };
 
-fakecollision = function() {
-    if (a ) {
 
-    }
-}
 
 window.addEventListener("keydown", controller.keyListener);
 window.addEventListener("keyup", controller.keyListener);
 window.requestAnimationFrame(loop);
-window.requestAnimationFrame(fakecollision);
