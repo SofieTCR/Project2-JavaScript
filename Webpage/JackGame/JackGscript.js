@@ -16,7 +16,7 @@ platform = {
 rectangle = {
     height:75,
     jumping:true,
-    width:32,
+    width:30,
     x:30, //bottom left of canvas
     x_velocity:0,
     y:700,
@@ -72,7 +72,6 @@ loop = function() {
         rectangle.y = 700 - 100 - rectangle.height; 
         rectangle.y_velocity = 0; //collision makes velocity 0 once it hits something
     }
-    
     //fake collision detection left and right side of the screen
     if (rectangle.x < 0) {
         rectangle.x = 0;
@@ -104,6 +103,25 @@ loop = function() {
     context.beginPath();
     context.fillRect(platform.x, platform.y, platform.width, platform.height);
     context.fill();
+
+
+    //collision idk kill me
+    var rect_right = rectangle.x + rectangle.width;
+    var rect_left = rectangle.x;
+    var rect_top = rectangle.y;
+    var rect_bottom = rectangle.y + rectangle.height;
+    
+    var platform_right = platform.x + platform.width;
+    var platform_left = platform.x;
+    var platform_top = platform.y;
+    var platform_bottom = platform.y + platform.height;
+
+    if (rect_right >= platform_left) {
+        rectangle.x = platform.x - rectangle.width;
+    }
+
+
+
 
     // call update when the browser is ready to draw again
     window.requestAnimationFrame(loop); //executes the code every frame forever
