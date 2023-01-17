@@ -1,10 +1,17 @@
-var context, controller, rectangle, loop;
+var context, controller, rectangle, loop, platform, fakecollision;
 
 context = document.querySelector("canvas").getContext("2d");
 
 context.canvas.height = 700;
 context.canvas.width = 1200;
 
+
+platform = {
+    height:30,
+    width:100,
+    x:800,
+    y:525,
+}
 
 rectangle = {
     height:75,
@@ -42,21 +49,21 @@ controller = {
 
 loop = function() {
     if (controller.up && rectangle.jumping == false) {
-        rectangle.y_velocity -= 20;
+        rectangle.y_velocity -= 25;
         rectangle.jumping = true;
         
     }
     if (controller.left) {
-        rectangle.x_velocity -= 1;
+        rectangle.x_velocity -= 10;
     }
     if (controller.right) {
-        rectangle.x_velocity += 1;
+        rectangle.x_velocity += 10;
     }
 
     rectangle.y_velocity += 1.5; //adds gravity to the jump
     rectangle.x += rectangle.x_velocity; //adds movement to left/right
     rectangle.y += rectangle.y_velocity; //adds movement to up/down
-    rectangle.x_velocity *= 0.9; //friction, makes a max-movement speed
+    rectangle.x_velocity *= 0; //friction, makes a max-movement speed
     rectangle.y_velocity *= 0.9; //friction
 
     //fake collision detection for the jump hitting the bottom ground line
@@ -92,12 +99,23 @@ loop = function() {
     context.beginPath();
     context.rect(0, 600, 1200, 20);
     context.fill();
+    //platform context
+    context.fillStyle = "yellow";
+    context.beginPath();
+    context.fillRect(platform.x, platform.y, platform.width, platform.height);
+    context.fill();
 
     // call update when the browser is ready to draw again
     window.requestAnimationFrame(loop); //executes the code every frame forever
 };
 
+fakecollision = function() {
+    if (a ) {
+
+    }
+}
 
 window.addEventListener("keydown", controller.keyListener);
 window.addEventListener("keyup", controller.keyListener);
 window.requestAnimationFrame(loop);
+window.requestAnimationFrame(fakecollision);
