@@ -4,15 +4,20 @@ var ctx = MyCanvas.getContext("2d"); // set the canvas to 2d mode
 var CanvasDimensions = [];
 var PressedKey;
 var SpriteSpeed = 5;
-var Gameobjects = []; //each gameobject is structured as follows: 0:name, 1:type, 2:PositionX, 3:PositionY, 4:SizeX, 5:SizeY 6:Colour 7:Font, parameter
-// Accepted Types: Sprite, Obstacle, StaticCollidibleObject, StaticNonCollidibleObject, Interactible, Text
+var Gameobjects = []; //each gameobject is structured as follows: 0:name, 1:type, 2:PositionX, 3:PositionY, 4:SizeX, 5:SizeY 6:Colour 7:Font, 8:parameter
+// Accepted Types: Sprite, Obstacle, StaticCollidibleObject, StaticNonCollidibleObject, Interactible, Text, Image
 var ObstacleIMG = new Image();
 var ObstacleSize = [312, 129];
 var KeyIMG = new Image();
 var Keysize = [83, 83];
+var DoorIMG = new Image();
 var SpriteIndex;
+var PopupTextIndex;
+var ScoreboardCounterIndex;
 var Debug = false;
-
+var ObstacleList = [];
+var Interacting;
+var CollectedKeys = 0;
 //temp vars
 
 
@@ -34,15 +39,45 @@ function fixedUpdate() {
     ctx.clearRect(0,0, CanvasDimensions[0], CanvasDimensions[1]); //Clear the screen
     SpriteMovement();
 
+    
+    for (let index = 0; index < ObstacleList.length; index++) {
+        //check if we're colliding with any obstacles or collidible static objects
+        if (DetectCollision(Gameobjects[SpriteIndex], ObstacleList[index])) {
+            FixCollision(Gameobjects[SpriteIndex], ObstacleList[index]); //Move the sprite out of the collision
+        }        
+    }
+    NoInteraction = true;
     for (let index = 0; index < Gameobjects.length; index++) {
-        if (Gameobjects[index][1] == "Obstacle" || Gameobjects[index][1] == "StaticCollidibleObject") {
-            //check if we're colliding with anything
+        if (Gameobjects[index][1] == "Interactible") {
             if (DetectCollision(Gameobjects[SpriteIndex], Gameobjects[index])) {
-                FixCollision(Gameobjects[SpriteIndex], Gameobjects[index]); //Move the sprite out of the collision
+                if (Debug) { console.log("Sprite is colliding with " + Gameobjects[index][0]); }
+                Gameobjects[PopupTextIndex][8] = "Press E to interact with " + Gameobjects[index][0];
+                NoInteraction = false;
+                if (Interacting && Gameobjects[index][0].includes("Key")) {
+                    console.log("Sprite is interacting with " + Gameobjects[index][0]);
+                    Gameobjects.splice(index, 1);
+                    NoInteraction = true;
+                    CollectedKeys++;
+                    ReloadIndexes(Gameobjects);
+                }
+                else if (Interacting && Gameobjects[index][0].includes("Door")) {
+                    if (CollectedKeys >= 3) {
+                        alert("Congratulations, you made it out!");
+                        PressedKey[69] = false;
+                        location.reload();
+                    }
+                    else {
+                        alert("Sorry, you're " + (3-CollectedKeys) + " keys short so you cannot leave yet!");
+                        PressedKey[69] = false;
+                    }
+                }
             }
         }
     }
-
+    if (NoInteraction) {
+        Gameobjects[PopupTextIndex][8] = "";
+    }
+    Gameobjects[ScoreboardCounterIndex][8] = CollectedKeys;
     for (let index = 0; index < Gameobjects.length; index++) {
         DrawGameObject(Gameobjects[index])
     }   
@@ -51,33 +86,74 @@ function fixedUpdate() {
 function onLoad() {
     CanvasDimensions[0] = MyCanvas.offsetWidth - parseInt(MyCanvas.style.borderRightWidth) * 2;
     CanvasDimensions[1] = MyCanvas.offsetHeight - parseInt(MyCanvas.style.borderBottomWidth) * 2;
-    CreateRandomObstacles(true, 0, 50);
+
+    // CreateRandomObstacles(true, 0, 50);
+    CreateRandomObjects("Obstacle", "Obstacle", ObstacleSize, true, 5, 50, true, 0.15, 0.40); //Generate Obstacles
+
+    CreateRandomObjects("Key", "Interactible", Keysize, false, 3, 0, false, .3, 0, KeyIMG); //Generate Keys
+
     ReadyCanvas();
-    GetSpriteIndex(Gameobjects);
+
+    for (let index = 0; index < Gameobjects.length; index++) { //Add all the obstacles to a list for easier use
+        if (Gameobjects[index][1] == "Obstacle" || Gameobjects[index][1] == "StaticCollidibleObject") {
+            ObstacleList.push(Gameobjects[index]);
+        }
+    }
+
+    for (let index = 0; index < Gameobjects.length; index++) {
+        if(Gameobjects[index][1] == "Interactible") {
+            for (let ObstacleIndex = 0; ObstacleIndex < ObstacleList.length; ObstacleIndex++) {
+                if (DetectCollision(Gameobjects[index], ObstacleList[ObstacleIndex])) {
+                    FixCollision(Gameobjects[index], ObstacleList[ObstacleIndex])
+                    console.log("Moving " + Gameobjects[index][0] + " To fix collision with " + ObstacleList[ObstacleIndex][0]);
+                }
+            }
+        }
+    }
+
+    ReloadIndexes(Gameobjects);
+    // GenerateInteractibleList(Gameobjects);
+    // GetSpriteIndex(Gameobjects);
+    // GetPopupTextIndex(Gameobjects);
+    // GetScoreboardIndex(Gameobjects);
 }    
 
 function ReadyCanvas() {
     ObstacleIMG.src = "assets/SofieGame Obstacle.png";
     KeyIMG.src = "assets/SofieGame Key.png";
+    DoorIMG.src = "assets/SofieGame Exit Door.png";
 
-    Gameobjects.push(CreateGameObject("My Sprite", "Sprite", 300, 180, 30, 60, "green")); // create sprite
+    Gameobjects.push(CreateGameObject("Door", "Interactible", 600, 0, 60, 35, "", "", DoorIMG)); // create Exit
+
+    Gameobjects.push(CreateGameObject("PopupText", "Text", CanvasDimensions[0]/2-200, CanvasDimensions[1]*.85, 0, 0, "black", "32px Arial", "")); // create Splash Text
 
     Gameobjects.push(CreateGameObject("Scoreboard Border", "StaticCollidibleObject", 0, 35, 60, 4, "black")); // Scoreboard
     Gameobjects.push(CreateGameObject("Scoreboard Border", "StaticCollidibleObject", 60, 0, 4, 39, "black"));
     Gameobjects.push(CreateGameObject("Scoreboard Border", "StaticCollidibleObject", 0, 0, 60, 35, "#ededed"));
-    Gameobjects.push(CreateGameObject("Scoreboard Key", "Interactible", 5, 2.5, 30, 30, "", "", KeyIMG));
+    Gameobjects.push(CreateGameObject("Scoreboard Key", "Image", 5, 2.5, 30, 30, "", "", KeyIMG));
     Gameobjects.push(CreateGameObject("Scoreboard Counter", "Text", 35, 30, 0, 0, "black", "30px Arial", "0"));
+
+    Gameobjects.push(CreateGameObject("My Sprite", "Sprite", 300, 180, 35, 35, "green")); // create sprite
 
 }
 
-function GetSpriteIndex(list) {
+function ReloadIndexes(list) {
     for (let index = 0; index < list.length; index++) {
-        if (Gameobjects[index][1] == "Sprite") {
+        if (list[index][1] == "Sprite") {
             SpriteIndex = index;
             if (Debug) {console.log("Sprite Object Index: " + index);}
         }
+        if (list[index][0] == "PopupText") {
+            PopupTextIndex = index;
+            if (Debug) {console.log("PopupText Index: " + index);}
+        }
+        if (list[index][0] == "Scoreboard Counter") {
+            ScoreboardCounterIndex = index;
+            if (Debug) {console.log("Scoreboard Counter Index: " + index);}
+        }
     }
 }
+
 
 function SpriteMovement() {
     if (PressedKey && PressedKey[38]) {
@@ -91,6 +167,12 @@ function SpriteMovement() {
     }
     if (PressedKey && PressedKey[37]) {
         Gameobjects[SpriteIndex][2] = Gameobjects[SpriteIndex][2] - SpriteSpeed;
+    }
+    if (PressedKey && PressedKey[69]) {
+        Interacting = true;
+    }
+    else {
+        Interacting = false;
     }
     switch (true) {
         case Gameobjects[SpriteIndex][3] < 0 :
@@ -185,6 +267,9 @@ function DrawGameObject(InputObject) {
         case "Interactible" :
             ctx.drawImage(InputObject[8], InputObject[2], InputObject[3], InputObject[4], InputObject[5]);
             break;
+        case "Image" :
+            ctx.drawImage(InputObject[8], InputObject[2], InputObject[3], InputObject[4], InputObject[5]);
+            break;
         case "Text" : 
             ctx.fillStyle = InputObject[6];
             ctx.font = InputObject[7];
@@ -209,7 +294,7 @@ function CreateGameObject(name, type, PositionX, PositionY, SizeX, SizeY, Colour
     return ReturnObject;
 }
 
-function CreateRandomObstacles(DoRandomAmmount, Amount, Upperlimit)
+function CreateRandomObstacles(DoRandomAmmount, Amount, Upperlimit) //retired function
 {
     if (DoRandomAmmount) {
         Amount = Math.floor(Math.random()*Upperlimit);
@@ -219,6 +304,40 @@ function CreateRandomObstacles(DoRandomAmmount, Amount, Upperlimit)
         var Position = [(CanvasDimensions[0] - (ObstacleSize[0]* 1/SizeDivide)) * Math.random(), (CanvasDimensions[1] - (ObstacleSize[1]* 1/SizeDivide)) * Math.random()];
         var GeneratedObstacle = CreateGameObject("Obstacle" + (index+1), "Obstacle", Position[0], Position[1], ObstacleSize[0]/SizeDivide, ObstacleSize[1]/SizeDivide);
         Gameobjects.push(GeneratedObstacle);
+    }
+}
+
+function CreateRandomObjects(ObjectName, ObjectType, ObjectSize, DoRandomAmmount, MinAmount, MaxAmount, DoRandomSize, MinSize, MaxSize, parameter) {
+    var SizeModifier;
+    if (DoRandomAmmount) {
+        //If a random amount is desired, Generate it and store it in the Minimum Amount parameter.
+        MinAmount = Math.max(MinAmount, Math.round(Math.random() * MaxAmount));
+    }
+    for (let index = 0; index < MinAmount; index++) {
+        if (DoRandomSize) {
+            //If a random size is desired, Generate it and store it in the size modifier.
+            SizeModifier = Math.max(MinSize, Math.random() * MaxSize);
+        }
+        else {
+            SizeModifier = MinSize;
+        }
+        var Position = [ //Generate a random position between 0 and the maximum width of the canvas minus the size of the object
+           Math.round(Math.random() * (CanvasDimensions[0] - ObjectSize[0] * SizeModifier)),
+           Math.round(Math.random() * (CanvasDimensions[1] - ObjectSize[1] * SizeModifier))
+        ];
+        Gameobjects.push(
+            CreateGameObject( //Create the Gameobject and push into the list containing all the gameobjects
+                ObjectName + (index+1),
+                ObjectType,
+                Position[0],
+                Position[1],
+                ObjectSize[0]*SizeModifier,
+                ObjectSize[1]*SizeModifier,
+                "",
+                "",
+                parameter
+            )
+        );
     }
 }
 
