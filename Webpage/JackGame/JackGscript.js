@@ -5,7 +5,7 @@ context = document.querySelector("canvas").getContext("2d");
 
 context.canvas.height = 700;
 context.canvas.width = 1200;
-gameIMG.src = "./assets/finishflag.png";
+gameIMG.src = "./assets/finishflag2.jpg";
 
 
 flag = {
