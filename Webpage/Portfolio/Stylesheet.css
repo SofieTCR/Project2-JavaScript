@@ -38,7 +38,7 @@ main
 {
     margin-top: 48px;
     margin-bottom: 48px;
-    height: 40vw;
+    height: 90vh;
     border: 5px dashed #a3a3a3;
     border-radius: 25px;
 }
@@ -61,4 +61,8 @@ h1
 #GianFoto{
     width: 300px;
     height: 300px;
+}
+#SofieFoto
+{
+    height: 55vh;
 }
