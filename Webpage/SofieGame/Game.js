@@ -68,7 +68,7 @@ function fixedUpdate() {
                     }
                     else {
                         alert("Sorry, you're " + (3-CollectedKeys) + " keys short so you cannot leave yet!");
-                        PressedKey[69] = false;
+                        PressedKey = [];
                     }
                 }
             }
@@ -88,7 +88,7 @@ function onLoad() {
     CanvasDimensions[1] = MyCanvas.offsetHeight - parseInt(MyCanvas.style.borderBottomWidth) * 2;
 
     // CreateRandomObstacles(true, 0, 50);
-    CreateRandomObjects("Obstacle", "Obstacle", ObstacleSize, true, 5, 50, true, 0.15, 0.40); //Generate Obstacles
+    CreateRandomObjects("Obstacle", "Obstacle", ObstacleSize, true, 15, 50, true, 0.15, 0.40); //Generate Obstacles
 
     CreateRandomObjects("Key", "Interactible", Keysize, false, 3, 0, false, .3, 0, KeyIMG); //Generate Keys
 
@@ -156,16 +156,16 @@ function ReloadIndexes(list) {
 
 
 function SpriteMovement() {
-    if (PressedKey && PressedKey[38]) {
+    if (PressedKey && PressedKey[87]) {
         Gameobjects[SpriteIndex][3] = Gameobjects[SpriteIndex][3] - SpriteSpeed;
     }
-    if (PressedKey && PressedKey[40]) {
+    if (PressedKey && PressedKey[83]) {
         Gameobjects[SpriteIndex][3] = Gameobjects[SpriteIndex][3] + SpriteSpeed;
     }
-    if (PressedKey && PressedKey[39]) {
+    if (PressedKey && PressedKey[68]) {
         Gameobjects[SpriteIndex][2] = Gameobjects[SpriteIndex][2] + SpriteSpeed;
     }
-    if (PressedKey && PressedKey[37]) {
+    if (PressedKey && PressedKey[65]) {
         Gameobjects[SpriteIndex][2] = Gameobjects[SpriteIndex][2] - SpriteSpeed;
     }
     if (PressedKey && PressedKey[69]) {
