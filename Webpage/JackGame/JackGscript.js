@@ -66,9 +66,15 @@ platform10 = {
     x:850,
     y:80,
 }
+platform11 = {
+    height:10,
+    width:200,
+    x:950,
+    y:275,
+}
 
 
-var platforms = [platform, platform2, platform3, platform4, platform5, platform6, platform7, platform8, platform9, platform10];
+var platforms = [platform, platform2, platform3, platform4, platform5, platform6, platform7, platform8, platform9, platform10, platform11];
 
 rectangle = {
     height:50,

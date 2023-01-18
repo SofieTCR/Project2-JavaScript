@@ -20,4 +20,6 @@ h1 {
 }
 canvas {
     background-color:#ffffff;
+    margin-bottom: 5vh;
+    border: #ededed solid 4px;
 }
