@@ -1,10 +1,19 @@
-var context, controller, rectangle, loop, timeout = 0;
+var context, controller, rectangle, loop, timeout = 0, flag;
+var gameIMG = new Image();
 
 context = document.querySelector("canvas").getContext("2d");
 
 context.canvas.height = 700;
 context.canvas.width = 1200;
+gameIMG.src = "./assets/finishflag.png";
 
+
+flag = {
+    height:100,
+    width:100,
+    x:1000,
+    y:175,
+}
 
 platform = {
     height:30,
@@ -75,6 +84,7 @@ platform11 = {
 
 
 var platforms = [platform, platform2, platform3, platform4, platform5, platform6, platform7, platform8, platform9, platform10, platform11];
+var flags= [flag]
 
 rectangle = {
     height:50,
@@ -172,6 +182,8 @@ loop = function() {
     context.beginPath();
     context.rect(0, 600, 1200, 20);
     context.fill();
+    //Flag context
+    context.drawImage(gameIMG, flag.x, flag.y, flag.width, flag.height);
     //platform context
     for (let index = 0; index < platforms.length; index++) {
         context.fillStyle = "yellow";
@@ -229,6 +241,26 @@ loop = function() {
                 rectangle.y_velocity = 0; //collision makes velocity 0 once it hits something
             }
         }
+    }
+
+    for (let index = 0; index < flags.length; index++) {
+        if (DetectCollision_flag(flags[index])) {
+            alert("You win!");
+        }
+    }
+
+    function DetectCollision_flag() {
+        // Check if the two objects are overlapping
+        if (rectangle.x + rectangle.width > flag.x &&
+            rectangle.x < flag.x + flag.width &&
+            rectangle.y + rectangle.height > flag.y &&
+            rectangle.y < flag.y + flag.height) {
+            
+            return true;
+        }     
+        else {
+            return false;
+        }    
     }
 
     // call update when the browser is ready to draw again
