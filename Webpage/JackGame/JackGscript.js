@@ -1,4 +1,4 @@
-var context, controller, rectangle, loop;
+var context, controller, rectangle, loop, timeout = 0;
 
 context = document.querySelector("canvas").getContext("2d");
 
@@ -10,11 +10,68 @@ platform = {
     height:30,
     width:100,
     x:800,
-    y:525,
+    y:550,
+}
+platform2 = {
+    height:30,
+    width:150,
+    x:950,
+    y:450,
+}
+platform3 = {
+    height:30,
+    width:100,
+    x:675,
+    y:400,
+}
+platform4 = {
+    height:15,
+    width:75,
+    x:450,
+    y:350,
+}
+platform5 = {
+    height:30,
+    width:50,
+    x:275,
+    y:350,
+}
+platform6 = {
+    height:30,
+    width:50,
+    x:150,
+    y:300,
+}
+platform7 = {
+    height:15,
+    width:40,
+    x:200,
+    y:200,
+}
+platform8 = {
+    height:20,
+    width:100,
+    x:350,
+    y:150,
+}
+platform9 = {
+    height:10,
+    width:80,
+    x:680,
+    y:150,
+}
+platform10 = {
+    height:100,
+    width:50,
+    x:850,
+    y:80,
 }
 
+
+var platforms = [platform, platform2, platform3, platform4, platform5, platform6, platform7, platform8, platform9, platform10];
+
 rectangle = {
-    height:75,
+    height:50,
     jumping:true,
     width:30,
     x:30, //bottom left of canvas
@@ -43,17 +100,20 @@ controller = {
             case 68: //right key = d
                 controller.right = key_state;
             break;
-
-
         }
     }
 };
 
+setInterval(jumptimeout, 1);
+function jumptimeout() {
+    timeout++;
+}
+
 loop = function() {
-    if (controller.up && rectangle.jumping == false) {
+    if (controller.up && rectangle.jumping == false && timeout >= 70 && rectangle.y_velocity == 0) {
         rectangle.y_velocity -= 25;
         rectangle.jumping = true;
-        
+        timeout = 0;
     }
     if (controller.left) {
         rectangle.x_velocity -= 10;
@@ -64,6 +124,7 @@ loop = function() {
 
     rectangle.y_velocity += 1.5; //adds gravity to the jump
     rectangle.x += rectangle.x_velocity; //adds movement to left/right
+    rectangle.y += rectangle.y_velocity; //adds movement to up/down
     rectangle.x_velocity *= 0; //friction, makes a max-movement speed
     rectangle.y_velocity *= 0.9; //friction
 
@@ -80,10 +141,12 @@ loop = function() {
     else if (rectangle.x > 1168) {
         rectangle.x = 1168;
     }
-    if (DetectCollision()) {
-        FixCollision();
+    for (let index = 0; index < platforms.length; index++) {
+        if (DetectCollision(platforms[index])) {
+            FixCollision(platforms[index]);
+        }
+        
     }
-    rectangle.y += rectangle.y_velocity; //adds movement to up/down
 
     //background context
     context.fillStyle = "#83b7d0"; //background color
@@ -104,21 +167,20 @@ loop = function() {
     context.rect(0, 600, 1200, 20);
     context.fill();
     //platform context
-    context.fillStyle = "yellow";
-    context.beginPath();
-    context.fillRect(platform.x, platform.y, platform.width, platform.height);
-    context.fill();
+    for (let index = 0; index < platforms.length; index++) {
+        context.fillStyle = "yellow";
+        context.beginPath();
+        context.fillRect(platforms[index].x, platforms[index].y, platforms[index].width, platforms[index].height);        
+    }
 
-
-    
 
     //gestolen van sOfie
-    function DetectCollision() {
+    function DetectCollision(staticobject) {
         // Check if the two objects are overlapping
-        if (rectangle.x + rectangle.width > platform.x &&
-            rectangle.x < platform.x + platform.width &&
-            rectangle.y + rectangle.height > platform.y &&
-            rectangle.y < platform.y + platform.height) {
+        if (rectangle.x + rectangle.width > staticobject.x &&
+            rectangle.x < staticobject.x + staticobject.width &&
+            rectangle.y + rectangle.height > staticobject.y &&
+            rectangle.y < staticobject.y + staticobject.height) {
             
             return true;
         }     
@@ -127,47 +189,41 @@ loop = function() {
         }    
     }
     
-    // 2 = x | 4 = width | 3 = y | 5 = height
-    function FixCollision() {
+    //gestolen van sOfie/Sofie's hulp gekregen cuz Im a dumb dumb
+    function FixCollision(staticobject) {
         // Calculate the distance between the objects on the x and y axis
         const xDistance = Math.min(
-            Math.abs(rectangle.x + rectangle.width - platform.x),
-            Math.abs(platform.x + platform.width - rectangle.x)
+            Math.abs(rectangle.x + rectangle.width - staticobject.x),
+            Math.abs(staticobject.x + staticobject.width - rectangle.x)
         );
         const yDistance = Math.min(
-            Math.abs(rectangle.y + rectangle.height - platform.y),
-            Math.abs(platform.y + platform.height - rectangle.y)
+            Math.abs(rectangle.y + rectangle.height - staticobject.y),
+            Math.abs(staticobject.y + staticobject.height - rectangle.y)
         );
     
         // Determine which axis the collision occurred on
         if (xDistance < yDistance) {
             // The collision occurred on the x-axis
-            if (Math.abs(rectangle.x + rectangle.width - platform.x) < Math.abs(platform.x + platform.width - rectangle.x)) {
-                rectangle.x = platform.x - rectangle.width;
-                console.log("Het was X-axis");
+            if (Math.abs(rectangle.x + rectangle.width - staticobject.x) < Math.abs(staticobject.x + staticobject.width - rectangle.x)) {
+                rectangle.x = staticobject.x - rectangle.width;
             }
             else {
-                rectangle.x = platform.x + platform.width;
+                rectangle.x = staticobject.x + staticobject.width;
             }
         }
         else {
             // The collision occurred on the y-axis
-            if (Math.abs(rectangle.y + rectangle.height - platform.y) < Math.abs(platform.y + platform.height - rectangle.y)) {
-                rectangle.y = platform.y - rectangle.height;
+            if (Math.abs(rectangle.y + rectangle.height - staticobject.y) < Math.abs(staticobject.y + staticobject.height - rectangle.y)) {
+                rectangle.y = staticobject.y - rectangle.height;
                 rectangle.jumping = false
                 rectangle.y_velocity = 0; //collision makes velocity 0 once it hits something
-                console.log("Het was Y-axis");
             }
             else {
-                rectangle.y = platform.y + platform.height;
+                rectangle.y = staticobject.y + staticobject.height;
                 rectangle.y_velocity = 0; //collision makes velocity 0 once it hits something
-                console.log("Het was Y-axis")
             }
         }
     }
-
-
-
 
     // call update when the browser is ready to draw again
     window.requestAnimationFrame(loop); //executes the code every frame forever
