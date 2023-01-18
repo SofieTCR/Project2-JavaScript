@@ -43,6 +43,8 @@ controller = {
             case 68: //right key = d
                 controller.right = key_state;
             break;
+
+
         }
     }
 };
@@ -62,7 +64,6 @@ loop = function() {
 
     rectangle.y_velocity += 1.5; //adds gravity to the jump
     rectangle.x += rectangle.x_velocity; //adds movement to left/right
-    rectangle.y += rectangle.y_velocity; //adds movement to up/down
     rectangle.x_velocity *= 0; //friction, makes a max-movement speed
     rectangle.y_velocity *= 0.9; //friction
 
@@ -79,6 +80,10 @@ loop = function() {
     else if (rectangle.x > 1168) {
         rectangle.x = 1168;
     }
+    if (DetectCollision()) {
+        FixCollision();
+    }
+    rectangle.y += rectangle.y_velocity; //adds movement to up/down
 
     //background context
     context.fillStyle = "#83b7d0"; //background color
@@ -105,19 +110,60 @@ loop = function() {
     context.fill();
 
 
-    //collision idk kill me
-    var rect_right = rectangle.x + rectangle.width;
-    var rect_left = rectangle.x;
-    var rect_top = rectangle.y;
-    var rect_bottom = rectangle.y + rectangle.height;
     
-    var platform_right = platform.x + platform.width;
-    var platform_left = platform.x;
-    var platform_top = platform.y;
-    var platform_bottom = platform.y + platform.height;
 
-    if (rect_right >= platform_left) {
-        rectangle.x = platform.x - rectangle.width;
+    //gestolen van sOfie
+    function DetectCollision() {
+        // Check if the two objects are overlapping
+        if (rectangle.x + rectangle.width > platform.x &&
+            rectangle.x < platform.x + platform.width &&
+            rectangle.y + rectangle.height > platform.y &&
+            rectangle.y < platform.y + platform.height) {
+            
+            return true;
+        }     
+        else {
+            return false;
+        }    
+    }
+    
+    // 2 = x | 4 = width | 3 = y | 5 = height
+    function FixCollision() {
+        // Calculate the distance between the objects on the x and y axis
+        const xDistance = Math.min(
+            Math.abs(rectangle.x + rectangle.width - platform.x),
+            Math.abs(platform.x + platform.width - rectangle.x)
+        );
+        const yDistance = Math.min(
+            Math.abs(rectangle.y + rectangle.height - platform.y),
+            Math.abs(platform.y + platform.height - rectangle.y)
+        );
+    
+        // Determine which axis the collision occurred on
+        if (xDistance < yDistance) {
+            // The collision occurred on the x-axis
+            if (Math.abs(rectangle.x + rectangle.width - platform.x) < Math.abs(platform.x + platform.width - rectangle.x)) {
+                rectangle.x = platform.x - rectangle.width;
+                console.log("Het was X-axis");
+            }
+            else {
+                rectangle.x = platform.x + platform.width;
+            }
+        }
+        else {
+            // The collision occurred on the y-axis
+            if (Math.abs(rectangle.y + rectangle.height - platform.y) < Math.abs(platform.y + platform.height - rectangle.y)) {
+                rectangle.y = platform.y - rectangle.height;
+                rectangle.jumping = false
+                rectangle.y_velocity = 0; //collision makes velocity 0 once it hits something
+                console.log("Het was Y-axis");
+            }
+            else {
+                rectangle.y = platform.y + platform.height;
+                rectangle.y_velocity = 0; //collision makes velocity 0 once it hits something
+                console.log("Het was Y-axis")
+            }
+        }
     }
 
 
